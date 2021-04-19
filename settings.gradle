@@ -1,0 +1,6 @@
+include ':draw'
+include ':imageeditlibrary'
+include ':core'
+include ':common_sdk'
+include ':app'
+rootProject.name = "TuyueSdk"

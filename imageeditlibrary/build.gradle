@@ -1,0 +1,59 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.gitlab.jian936396665'
+apply plugin: 'com.novoda.bintray-release'
+publish {
+    repoName = 'test_lib'
+    userOrg = 'jian936396665'        //bintray.com用户名
+    groupId = 'com.tuyue'    //jcenter上的路径
+    artifactId = 'TuyueSdk'   //项目名称
+    publishVersion = '1.0.3'//版本号
+    desc = '自动实现序列化'//描述，自由填写
+    website = 'https://gitlab.com/release_lib/release' // 网址，自由填写
+}
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        javaCompileOptions{
+            annotationProcessorOptions{
+                includeCompileClasspath true
+            }
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.robolectric:robolectric:3.3.2"
+
+    api 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    api 'androidx.recyclerview:recyclerview:1.0.0'
+    api 'androidx.appcompat:appcompat:1.0.0'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
+}
